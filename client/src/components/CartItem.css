@@ -1,0 +1,11 @@
+.cart-item {
+  display: flex;
+}
+
+.cart-item .details {
+  flex-grow: 1;
+}
+
+.cart-item .sku {
+  font-size: 0.8em;
+}

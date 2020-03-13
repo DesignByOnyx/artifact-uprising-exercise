@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  dev-client:
+    container_name: artifact_dev_client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: artifact/dev_client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/usr/src/app
+
+  dev-server:
+    container_name: artifact_dev_server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: artifact/dev_server
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./server:/usr/src/app
