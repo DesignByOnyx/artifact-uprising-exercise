@@ -3,6 +3,7 @@ export interface ICartItem {
   name: string;
   sku: string;
   quantity: number;
+  price: number;
 }
 
 export interface IQuantityChangedDetail {

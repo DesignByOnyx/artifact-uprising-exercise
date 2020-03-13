@@ -1,3 +1,7 @@
+.app {
+  max-width: 60em;
+}
+
 .app-header {
   height: 4em;
   padding: 0.5em;
@@ -6,13 +10,4 @@
 
 .app-header img {
   height: 100%;
-}
-
-@media only screen and (min-width: 60em) {
-  .app {
-    width: 60vw;
-    min-width: 60em;
-    max-width: 100em;
-    margin: 0 auto;
-  }
 }

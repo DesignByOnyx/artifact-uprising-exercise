@@ -37,6 +37,7 @@ function CartItem({ cartItem }: CartItemProps) {
       <div className="details">
         <h3>{cartItem.name}</h3>
         <div className="sku">SKU: {cartItem.sku}</div>
+        <div className="price">Price: ${cartItem.price}</div>
       </div>
       <div className="actions">
         <input

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ICartItem, IQuantityChangedEvent } from "./types";
 import CartItemService from "../services/cart-item-service";
 
@@ -26,21 +26,24 @@ function useQuantityChangedHandler(
   cartItems: ICartItem[],
   setCartItems: (cartItems: ICartItem[]) => void
 ) {
-  function handleItemQuantityChanged(ev: IQuantityChangedEvent) {
-    const { sku, quantity } = ev.detail;
-    const itemIndex = cartItems.findIndex(item => item.sku === sku);
+  const handleItemQuantityChanged = useCallback(
+    (ev: IQuantityChangedEvent) => {
+      const { sku, quantity } = ev.detail;
+      const itemIndex = cartItems.findIndex(item => item.sku === sku);
 
-    if (itemIndex === -1) {
-      throw new Error(`Could not find item with SKU ${sku} in cart!`);
-    }
+      if (itemIndex === -1) {
+        throw new Error(`Could not find item with SKU ${sku} in cart!`);
+      }
 
-    const updatedItem = { ...cartItems[itemIndex], quantity };
+      const updatedItem = { ...cartItems[itemIndex], quantity };
 
-    CartItemService.update(updatedItem).then(data => {
-      cartItems[itemIndex] = data;
-      setCartItems([...cartItems]);
-    });
-  }
+      CartItemService.update(updatedItem).then(data => {
+        cartItems[itemIndex] = data;
+        setCartItems([...cartItems]);
+      });
+    },
+    [cartItems, setCartItems]
+  );
 
   useEffect(() => {
     document.addEventListener(
@@ -54,7 +57,7 @@ function useQuantityChangedHandler(
         handleItemQuantityChanged as EventListener
       );
     };
-  }, [cartItems]);
+  }, [handleItemQuantityChanged]);
 
   return handleItemQuantityChanged;
 }
@@ -70,19 +73,22 @@ function useItemRemovedHandler(
   cartItems: ICartItem[],
   setCartItems: (cartItems: ICartItem[]) => void
 ) {
-  function handleItemRemoved(ev: IQuantityChangedEvent) {
-    const { sku } = ev.detail;
-    const itemIndex = cartItems.findIndex(item => item.sku === sku);
+  const handleItemRemoved = useCallback(
+    (ev: IQuantityChangedEvent) => {
+      const { sku } = ev.detail;
+      const itemIndex = cartItems.findIndex(item => item.sku === sku);
 
-    if (itemIndex === -1) {
-      throw new Error(`Could not find item with SKU ${sku} in cart!`);
-    }
+      if (itemIndex === -1) {
+        throw new Error(`Could not find item with SKU ${sku} in cart!`);
+      }
 
-    CartItemService.remove(cartItems[itemIndex]).then(() => {
-      cartItems.splice(itemIndex, 1);
-      setCartItems([...cartItems]);
-    });
-  }
+      CartItemService.remove(cartItems[itemIndex]).then(() => {
+        cartItems.splice(itemIndex, 1);
+        setCartItems([...cartItems]);
+      });
+    },
+    [cartItems, setCartItems]
+  );
 
   useEffect(() => {
     document.addEventListener(
@@ -96,7 +102,7 @@ function useItemRemovedHandler(
         handleItemRemoved as EventListener
       );
     };
-  }, [cartItems]);
+  }, [handleItemRemoved]);
 
   return handleItemRemoved;
 }

@@ -1,0 +1,38 @@
+.cart-totals {
+  font-size: 0.9em;
+  padding: 1em;
+  margin-top: 1em;
+  border: 1px solid #ccc;
+  background-color: #eee;
+}
+
+.cart-totals .cart-item {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+
+.cart-totals .cart-item .name {
+  flex-grow: 1;
+  padding-right: 1em;
+}
+
+.cart-totals .cart-item .total {
+  flex-grow: 0;
+}
+
+.cart-totals .grand-total {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+  text-align: right;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 80em) {
+  .cart-totals {
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
+}

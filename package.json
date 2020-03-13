@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Simple shopping cart coding exercise",
   "scripts": {
-    "test": "pnpm run test"
+    "test": "pnpm run test",
+    "postinstall": "pnpm recursive install",
+    "clean": "rm -rf node_modules && pnpm recursive exec -- rm -rf node_modules"
   },
   "repository": {
     "type": "git",

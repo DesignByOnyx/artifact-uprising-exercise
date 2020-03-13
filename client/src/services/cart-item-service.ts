@@ -9,7 +9,7 @@ const headers = {
 };
 
 /**
- * Generates a new Cart Item with random name and SKU
+ * Generates a new Cart Item with random name, SKU, and price
  */
 function makeNewCartItem(): ICartItem {
   const rnd = Math.random()
@@ -19,10 +19,14 @@ function makeNewCartItem(): ICartItem {
   return {
     name: "Product " + rnd.toUpperCase(),
     sku: rnd,
-    quantity: 1
+    quantity: 1,
+    price: Math.round(Math.random() * 1500) / 10
   };
 }
 
+/**
+ * The CartItem Service for communicating with the API server.
+ */
 const CartItemService = {
   async getList() {
     return await fetch(CART_ITEMS_URL, {

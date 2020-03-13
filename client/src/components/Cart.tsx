@@ -1,6 +1,7 @@
 import React from "react";
 import { ICartItem, IQuantityChangedEvent, ButtonClick } from "./types";
 import CartItem from "./CartItem";
+import CartTotals from "./CartTotals";
 import CartItemService from "../services/cart-item-service";
 import {
   useLoadCartItems,
@@ -25,8 +26,10 @@ function Cart() {
     });
   }
 
+  const className = "cart" + (cartItems.length ? " has-items" : "");
+
   return (
-    <div className="cart">
+    <div className={className}>
       <h1>Shopping Cart</h1>
 
       {cartItems.length ? (
@@ -38,7 +41,11 @@ function Cart() {
         <EmptyCart />
       )}
 
-      <button onClick={handleAddButtonClick}>Add Item to Cart</button>
+      <button className="add-new-item" onClick={handleAddButtonClick}>
+        Add Item to Cart
+      </button>
+
+      <CartTotals cartItems={cartItems} />
     </div>
   );
 }
